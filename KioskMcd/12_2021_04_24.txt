@@ -1,0 +1,7 @@
+Order Id: 12
+Item: 
+1. McChicken	
+2. McChicken	
+3. Filet-O-Fish Meal (Medium)
+Total: RM13.0
+Total Quantity: 1 items.

@@ -1,0 +1,5 @@
+Order Id: 32
+Item: 
+1. McChicken	
+Total: RM8.1
+Total Quantity: 1 items.

@@ -1,0 +1,9 @@
+Order Id: 5
+Item: 
+1. McChicken	
+2. McChicken	
+3. McChicken	
+4. McChicken	
+5. Ayam Goreng McD Spicy (2pcs)	
+Total: RM11.9
+Total Quantity: 1 items.
