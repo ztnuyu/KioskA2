@@ -39,7 +39,7 @@ public class KitchenInterface {
 		list.setFixedCellHeight(50);
 		list.setFixedCellWidth(500);
 		list.setBounds(100,100,75,75);
-		list.setBackground(Color.yellow);
+		list.setBackground(Color.pink);
 	}
 	
 	private void KitchenGUI() {
@@ -66,14 +66,14 @@ public class KitchenInterface {
 		
 		//create a panel
 		p =new JPanel();
-		p.setBackground(Color.yellow);
+		p.setBackground(Color.pink);
 		p.setPreferredSize(new Dimension(250,250));
 		p.setLayout(new FlowLayout());
 		p.add(list);
 		
 		frame.add(p, BorderLayout.CENTER);
 		frame.add(lab, BorderLayout.NORTH);
-		frame.setBackground(Color.yellow);
+		frame.setBackground(Color.pink);
 
 		//set the size of frame
 		frame.setSize(700,600);		

@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.Random;
+import java.awt.Component;
 
 public class ClientInterface {
 	
@@ -46,6 +47,7 @@ public class ClientInterface {
    
    Connection connection;
    Statement statement;
+   private JLabel lblNewLabel;
 
    public ClientInterface()
    {      
@@ -57,6 +59,7 @@ public class ClientInterface {
 		
 		list1 = new DefaultListModel<>();		
 		list = new JList<>(list1);
+		list.setBackground(Color.pink);
 		list.setBounds(100,100,75,75);
    }
    
@@ -70,63 +73,123 @@ public class ClientInterface {
    public void prepareGUI(){
 	  //Frame 
       mainFrame = new JFrame("McDonalds Kiosk Application");
-      mainFrame.setSize(700,700);
-      mainFrame.setLayout(new BorderLayout());
+      mainFrame.setSize(1009,846);
+      mainFrame.getContentPane().setLayout(new BorderLayout());
       mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       mainFrame.setVisible(true);    
       mainFrame.getContentPane().setBackground(Color.YELLOW);
       mainFrame.getContentPane().setForeground(Color.WHITE);
-      mainFrame.setBounds(100,100,623,553);
-            
-      //TextField
-      creditCardField = new JTextField(20);
-      
-      //RadioButton
-      eatInButton = new JRadioButton("Eat-In", true);
-      eatInButton.setActionCommand("Eat-In");
-      takeAwayButton = new JRadioButton("Take-Away");
-      takeAwayButton.setActionCommand("Take-Away");
+      mainFrame.setBounds(500,200,800,800);
       
       //RadioButton Group
       group = new ButtonGroup();
-      group.add(eatInButton);
-      group.add(takeAwayButton);  
       
       //tableModel
-      String[] columnNames = {"ItemProduct", "Name", "Price"};          
+      String[] columnNames = {"Name", "Price"};          
       tableModel = new DefaultTableModel(columnNames, 0);
-      
-      //table
-      table = new JTable(tableModel);
-      table.setCellSelectionEnabled(true);
-      table.setFillsViewportHeight(true);
-      table.setBackground(Color.yellow);
-      table.setForeground(Color.black);
-      table.setSelectionBackground(Color.red);
-      table.setGridColor(Color.red);
-      table.setFont(new Font("Tahoma", Font.PLAIN,17));
-      table.setRowHeight(30);
-      table.setAutoCreateRowSorter(true);
-      
-      //Label
-      orderModeLabel = new JLabel("Order Mode: ");
-      headerLabel = new JLabel("Selected Item: "); 
-      itemQuantityLabel = new JLabel("Select Quantity: ");   
-      creditCardLabel = new JLabel("Enter Credit Card Number: "); 
       quantityTotalLabel = new JLabel("Total Quantity: "); 
       quantityLabel = new JLabel(); 
       priceTotalLabel = new JLabel("Total Price: RM"); 
       priceLabel = new JLabel();
-      productIdLabel = new JLabel("Product ID: "); 
       IdLabel = new JLabel();
       
       //ComboBox
       String[] quantity = {"1","2","3","4"};
-      quantitySelection = new JComboBox(quantity);
-      quantitySelection.setSelectedIndex(0);
+      
+      //North Panel 
+      orderModePanel = new JPanel();
+      orderModePanel.setLayout(new FlowLayout());
+      orderModePanel.setBackground(Color.PINK);
+      
+      //Center Panel
+      controlPanel = new JPanel();
+      controlPanel.setPreferredSize(new Dimension(100,100));
+      controlPanel.setLayout(new GridLayout(4,2));   
+      controlPanel.setBackground(Color.PINK);
+      
+      //ScrollPane
+      scrollPane = new JScrollPane();
+      scrollPane.setSize(1000, 1000);
+      
+      controlPanel.add(scrollPane);
+      
+      //table
+      table = new JTable(tableModel);
+      scrollPane.setViewportView(table);
+      table.setCellSelectionEnabled(true);
+      table.setFillsViewportHeight(true);
+      table.setBackground(Color.PINK);
+      table.setForeground(Color.black);
+      table.setSelectionBackground(Color.orange);
+      table.setGridColor(Color.orange);
+      table.setFont(new Font("Tahoma", Font.PLAIN,17));
+      table.setRowHeight(30);
+      table.setAutoCreateRowSorter(true);
+      
+      //West Panel
+      quantityPanel = new JPanel();
+      quantityPanel.setBackground(Color.PINK);
+      quantityPanel.setPreferredSize(new Dimension(250, 50));
+      quantityPanel.setLayout(new FlowLayout());   
+      
+      //South Panel
+      creditCardPanel = new JPanel();
+      creditCardPanel.setPreferredSize(new Dimension(250,250));
+      creditCardPanel.setLayout(new FlowLayout());
+      creditCardLabel = new JLabel("Enter Credit Card Number: "); 
+      creditCardPanel.add(creditCardLabel);
+      
+      //TextField
+      creditCardField = new JTextField(50);
+      creditCardPanel.add(creditCardField);   
+      
+      payButton = new JButton("Pay");
+      payButton.setBackground(Color.WHITE);
+      payButton.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String cc = creditCardField.getText().toString();
+			
+			OrderTransaction ot = new OrderTransaction();
+			ot.setLast4Digits(Integer.valueOf(cc));
+			
+			ClientApplication CA = new ClientApplication();
+			CA.SendCreditCardNumber(ot.getLast4Digits(), orderId, myOrder.getTotalAmount(), group.getSelection().getActionCommand());
+			
+		}
+    	  
+      });
+      creditCardPanel.add(payButton);
+      creditCardPanel.add(IdLabel);
+      creditCardPanel.setBackground(Color.PINK);
+      
+      //East Panel
+      listPanel = new JPanel();
+      listPanel.setBackground(Color.PINK);
+      listPanel.setPreferredSize(new Dimension(250, 250));
+      listPanel.setLayout(new FlowLayout());
+      listPanel.add(list);
+      listPanel.add(quantityTotalLabel);
+      listPanel.add(quantityLabel);
+      listPanel.add(priceTotalLabel);
+      listPanel.add(priceLabel);
+      
+      mainFrame.getContentPane().add(orderModePanel, BorderLayout.NORTH);
+      
+      lblNewLabel = new JLabel("WELCOME TO MCDONALDS <3");
+      lblNewLabel.setForeground(Color.DARK_GRAY);
+      lblNewLabel.setBackground(Color.DARK_GRAY);
+      lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+      orderModePanel.add(lblNewLabel);
+      mainFrame.getContentPane().add(controlPanel, BorderLayout.CENTER);
       
       //Button
-      addButton = new JButton("Add to Cart");  
+      addButton = new JButton("Insert to Cart");
+      controlPanel.add(addButton);
+      addButton.setPreferredSize(new Dimension(160, 30));
+      addButton.setBackground(Color.ORANGE);
+      addButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
       addButton.addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {	
@@ -143,7 +206,7 @@ public class ClientInterface {
 			quantityLabel.setText(String.valueOf(y));
 			priceLabel.setText(String.valueOf(df.format(tot)));			
 			IdLabel.setText(ID);			
-			itemprod.setItemProduct(Integer.valueOf(ID));
+			//itemprod.setItemProduct(Integer.valueOf(ID));
 
 			
 			try {
@@ -217,81 +280,35 @@ public class ClientInterface {
 			}			
 		}    	  
       });
-      
-      payButton = new JButton("Pay");
-      payButton.addActionListener(new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String cc = creditCardField.getText().toString();
-			
-			OrderTransaction ot = new OrderTransaction();
-			ot.setLast4Digits(Integer.valueOf(cc));
-			
-			ClientApplication CA = new ClientApplication();
-			CA.SendCreditCardNumber(ot.getLast4Digits(), orderId, myOrder.getTotalAmount(), group.getSelection().getActionCommand());
-			
-		}
-    	  
-      });
-      
-      //ScrollPane
-      scrollPane = new JScrollPane(table);
-      scrollPane.setSize(300, 300);
-      
-      //North Panel 
-      orderModePanel = new JPanel();
-      orderModePanel.setLayout(new FlowLayout());
-      
-      orderModePanel.add(orderModeLabel);
-      orderModePanel.add(eatInButton);
-      orderModePanel.add(takeAwayButton);
-      
-      //Center Panel
-      controlPanel = new JPanel();
-      controlPanel.setPreferredSize(new Dimension(100,100));
-      controlPanel.setLayout(new GridLayout(5,1));   
-      controlPanel.setBackground(Color.yellow);
-      
-      controlPanel.add(scrollPane);        
+      headerLabel = new JLabel("Selected Item: ");
       controlPanel.add(headerLabel);
-      controlPanel.add(itemQuantityLabel);
-      controlPanel.add(quantitySelection);
-      controlPanel.add(addButton);  
+      productIdLabel = new JLabel("");
+      controlPanel.add(productIdLabel);
+      mainFrame.getContentPane().add(creditCardPanel, BorderLayout.SOUTH);
+      mainFrame.getContentPane().add(listPanel, BorderLayout.EAST);      
+      mainFrame.getContentPane().add(quantityPanel, BorderLayout.WEST);  
       
-      //West Panel
-      quantityPanel = new JPanel();
-      quantityPanel.setBackground(Color.yellow);
-      quantityPanel.setPreferredSize(new Dimension(100,100));
-      quantityPanel.setLayout(new FlowLayout());   
+      //Label
+      orderModeLabel = new JLabel("Order Mode: ");
+      quantityPanel.add(orderModeLabel);
       
-      //South Panel
-      creditCardPanel = new JPanel();
-      creditCardPanel.setPreferredSize(new Dimension(250,250));
-      creditCardPanel.setLayout(new FlowLayout());
-      creditCardPanel.add(creditCardLabel);
-      creditCardPanel.add(creditCardField);   
-      creditCardPanel.add(payButton);
-      creditCardPanel.add(productIdLabel);
-      creditCardPanel.add(IdLabel);
-      creditCardPanel.setBackground(Color.black);
-      
-      //East Panel
-      listPanel = new JPanel();
-      listPanel.setBackground(Color.yellow);
-      listPanel.setPreferredSize(new Dimension(250,250));
-      listPanel.setLayout(new FlowLayout());
-      listPanel.add(list);
-      listPanel.add(quantityTotalLabel);
-      listPanel.add(quantityLabel);
-      listPanel.add(priceTotalLabel);
-      listPanel.add(priceLabel);
-      
-      mainFrame.add(orderModePanel, BorderLayout.NORTH);
-      mainFrame.add(controlPanel, BorderLayout.CENTER);
-      mainFrame.add(creditCardPanel, BorderLayout.SOUTH);
-      mainFrame.add(listPanel, BorderLayout.EAST);      
-      mainFrame.add(quantityPanel, BorderLayout.WEST);  
+      //RadioButton
+      eatInButton = new JRadioButton("Eat-In", true);
+      quantityPanel.add(eatInButton);
+      eatInButton.setBackground(Color.PINK);
+      eatInButton.setActionCommand("Eat-In");
+      group.add(eatInButton);
+      takeAwayButton = new JRadioButton("Take-Away");
+      quantityPanel.add(takeAwayButton);
+      takeAwayButton.setBackground(Color.PINK);
+      takeAwayButton.setActionCommand("Take-Away");
+      group.add(takeAwayButton);  
+      itemQuantityLabel = new JLabel("Select Quantity: ");
+      quantityPanel.add(itemQuantityLabel);
+      quantitySelection = new JComboBox(quantity);
+      quantityPanel.add(quantitySelection);
+      quantitySelection.setBackground(Color.WHITE);
+      quantitySelection.setSelectedIndex(0);
       
    }
    
@@ -314,7 +331,7 @@ public class ClientInterface {
 	          itemprod.setName(name);
 	          itemprod.setPrice(price);
 	          
-	          Object[] populateData = {itemprod.getItemProduct(), itemprod.getName(), itemprod.getPrice()}; 
+	          Object[] populateData = {itemprod.getName(), itemprod.getPrice()}; 
 	          tableModel.addRow(populateData);
           }  
           
@@ -333,8 +350,8 @@ public class ClientInterface {
                   for (int j = 0; j < columns.length; j++) 
                   {                	
                     Data = String.valueOf(table.getValueAt(row[i], columns[j]));
-                    Price = String.valueOf(table.getValueAt(row[i], 2));
-                    ID = String.valueOf(table.getValueAt(row[i], 0));
+                    Price = String.valueOf(table.getValueAt(row[i], 1));
+                    //ID = String.valueOf(table.getValueAt(row[i], 0));
                   }                                  
                 }                
                 headerLabel.setText(Data);                
