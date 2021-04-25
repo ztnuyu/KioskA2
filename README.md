@@ -5,15 +5,16 @@
 
 ## A. Kiosk Main Interface
 
-<img width="960" alt="main interface" src="https://user-images.githubusercontent.com/73053555/115986725-3679a380-a5e4-11eb-9d01-ef881635a71e.PNG">
+<img width="955" alt="main interface" src="https://user-images.githubusercontent.com/73053555/115988942-6037c800-a5ee-11eb-9866-bbdbb73412d0.PNG">
 
 ##  B. Credit card approved
 
 <img width="170" alt="verified" src="https://user-images.githubusercontent.com/73053555/115986759-590bbc80-a5e4-11eb-9e8e-c550c58760a7.PNG">
 
 ##  C. Client Receipt and Kitchen Screen Order
-<img width="450" alt="kitchen" src="https://user-images.githubusercontent.com/73053555/115986776-70e34080-a5e4-11eb-918a-e4781e258507.PNG">
-<img width="289" alt="resit" src="https://user-images.githubusercontent.com/73053555/115986778-717bd700-a5e4-11eb-8c08-f9a026e9b86c.PNG">
+
+<img width="931" alt="Capture" src="https://user-images.githubusercontent.com/73053555/115988957-70e83e00-a5ee-11eb-8ccd-0474bf65aa4e.PNG">
+
 
 ##  D. Credit card rejected 
 
