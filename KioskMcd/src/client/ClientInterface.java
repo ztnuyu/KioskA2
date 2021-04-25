@@ -87,9 +87,7 @@ public class ClientInterface {
       //tableModel
       String[] columnNames = {"Name", "Price"};          
       tableModel = new DefaultTableModel(columnNames, 0);
-      quantityTotalLabel = new JLabel("Total Quantity: "); 
       quantityLabel = new JLabel(); 
-      priceTotalLabel = new JLabel("Total Price: RM"); 
       priceLabel = new JLabel();
       IdLabel = new JLabel();
       
@@ -170,23 +168,11 @@ public class ClientInterface {
       listPanel.setPreferredSize(new Dimension(250, 250));
       listPanel.setLayout(new FlowLayout());
       listPanel.add(list);
-      listPanel.add(quantityTotalLabel);
       listPanel.add(quantityLabel);
-      listPanel.add(priceTotalLabel);
-      listPanel.add(priceLabel);
-      
-      mainFrame.getContentPane().add(orderModePanel, BorderLayout.NORTH);
-      
-      lblNewLabel = new JLabel("WELCOME TO MCDONALDS <3");
-      lblNewLabel.setForeground(Color.DARK_GRAY);
-      lblNewLabel.setBackground(Color.DARK_GRAY);
-      lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-      orderModePanel.add(lblNewLabel);
-      mainFrame.getContentPane().add(controlPanel, BorderLayout.CENTER);
       
       //Button
       addButton = new JButton("Insert to Cart");
-      controlPanel.add(addButton);
+      listPanel.add(addButton);
       addButton.setPreferredSize(new Dimension(160, 30));
       addButton.setBackground(Color.ORANGE);
       addButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -280,12 +266,26 @@ public class ClientInterface {
 			}			
 		}    	  
       });
+      listPanel.add(priceLabel);
+      
+      mainFrame.getContentPane().add(orderModePanel, BorderLayout.NORTH);
+      
+      lblNewLabel = new JLabel("WELCOME TO MCDONALDS <3");
+      lblNewLabel.setForeground(Color.DARK_GRAY);
+      lblNewLabel.setBackground(Color.DARK_GRAY);
+      lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+      orderModePanel.add(lblNewLabel);
+      mainFrame.getContentPane().add(controlPanel, BorderLayout.CENTER);
       headerLabel = new JLabel("Selected Item: ");
       controlPanel.add(headerLabel);
       productIdLabel = new JLabel("");
       controlPanel.add(productIdLabel);
       mainFrame.getContentPane().add(creditCardPanel, BorderLayout.SOUTH);
       mainFrame.getContentPane().add(listPanel, BorderLayout.EAST);      
+      quantityTotalLabel = new JLabel("Total Quantity: "); 
+      listPanel.add(quantityTotalLabel);
+      priceTotalLabel = new JLabel("Total Price: RM"); 
+      listPanel.add(priceTotalLabel);
       mainFrame.getContentPane().add(quantityPanel, BorderLayout.WEST);  
       
       //Label
