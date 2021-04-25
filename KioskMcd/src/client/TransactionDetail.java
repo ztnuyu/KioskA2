@@ -69,6 +69,7 @@ public class TransactionDetail {
 		//NORTH
 		lab =new JPanel();
 		lab.setPreferredSize(new Dimension(250,100));
+		lab.setBackground(Color.pink);
 		lab.setLayout(new FlowLayout());
 		lab.add(label3);
 		lab.add(label2);
